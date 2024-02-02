@@ -51,7 +51,9 @@ function toggleTimer() {
                 startPauseBtn.textContent = 'Start';
                 finishSound.play();
             }
+            
             updateDisplay(timerDuration, timerDisplay);
+            
         }, 1000);
     }
 }
@@ -62,6 +64,7 @@ document.addEventListener('visibilitychange', function() {
         if (expectedEndTime) {
             timerDuration = Math.round((expectedEndTime - now) / 1000);
             updateDisplay(timerDuration, timerDisplay);
+            
         }
     }
 });
@@ -77,6 +80,10 @@ function resetTimer() {
 }
 
 function shortBreakTimer(){
+    if (timer) {
+        clearInterval(timer);
+        timer = null;
+    }
     breakSound.play();
     clearInterval(timer);
     timer=null;
