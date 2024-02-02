@@ -1,0 +1,24 @@
+#pomodoro-app {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+#timer-display {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+#total-time-display {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+button {
+    font-size: 20px;
+    padding: 10px;
+    margin: 5px;
+}
+.large-btn {
+    padding: 1rem 1.5rem;
+    font-size: 1.25rem; 
+    border-radius: 0.5rem; 
+}
