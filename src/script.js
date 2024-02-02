@@ -27,6 +27,9 @@ function updateDisplay(timeInSeconds,display) {
     document.title = formattedTime + " - Pomodoro Timer";
 }
 
+let startTime;
+let expectedEndTime;
+
 function toggleTimer() {
     if (timer) {
         clearInterval(timer);
@@ -35,24 +38,33 @@ function toggleTimer() {
     } else {
         startSound.play();
         startPauseBtn.textContent = 'Pause';
+        if (!startTime) { 
+            startTime = new Date();
+            expectedEndTime = new Date(startTime.getTime() + timerDuration * 1000);
+        }
         timer = setInterval(() => {
-            timerDuration--;
-            if (isWorkSession){
-                totalTime++;
-            }
-            updateDisplay(totalTime,totalTimeDisplay);
-            updateDisplay(timerDuration,timerDisplay);
-            
-
+            const now = new Date();
+            timerDuration = Math.round((expectedEndTime - now) / 1000);
             if (timerDuration <= 0) {
                 clearInterval(timer);
                 timer = null;
                 startPauseBtn.textContent = 'Start';
                 finishSound.play();
             }
+            updateDisplay(timerDuration, timerDisplay);
         }, 1000);
     }
 }
+
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        const now = new Date();
+        if (expectedEndTime) {
+            timerDuration = Math.round((expectedEndTime - now) / 1000);
+            updateDisplay(timerDuration, timerDisplay);
+        }
+    }
+});
 
 function resetTimer() {
     resetSound.play();
