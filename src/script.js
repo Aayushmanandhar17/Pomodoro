@@ -10,10 +10,10 @@ const resetBtn = document.getElementById('reset-btn');
 const shortBreakBtn = document.getElementById('short-break-btn')
 const showTimeBtn = document.getElementById('show-time-btn')
 
-const resetSound = new Audio('../music/ding.mp3');
-const startSound = new Audio('../music/startding.mp3')
-const breakSound = new Audio ('../music/breakding.mp3')
-const finishSound = new Audio ('../music/finishline.mp3')
+const resetSound = new Audio('music/ding.mp3');
+const startSound = new Audio('music/startding.mp3')
+const breakSound = new Audio ('music/breakding.mp3')
+const finishSound = new Audio ('music/finishline.mp3')
 
 
 let timer = null;
@@ -27,6 +27,9 @@ function updateDisplay(timeInSeconds,display) {
     document.title = formattedTime + " - Pomodoro Timer";
 }
 
+let startTime;
+let expectedEndTime;
+
 function toggleTimer() {
     if (timer) {
         clearInterval(timer);
@@ -35,24 +38,33 @@ function toggleTimer() {
     } else {
         startSound.play();
         startPauseBtn.textContent = 'Pause';
+        if (!startTime) { 
+            startTime = new Date();
+            expectedEndTime = new Date(startTime.getTime() + timerDuration * 1000);
+        }
         timer = setInterval(() => {
-            timerDuration--;
-            if (isWorkSession){
-                totalTime++;
-            }
-            updateDisplay(totalTime,totalTimeDisplay);
-            updateDisplay(timerDuration,timerDisplay);
-            
-
+            const now = new Date();
+            timerDuration = Math.round((expectedEndTime - now) / 1000);
             if (timerDuration <= 0) {
                 clearInterval(timer);
                 timer = null;
                 startPauseBtn.textContent = 'Start';
                 finishSound.play();
             }
+            updateDisplay(timerDuration, timerDisplay);
         }, 1000);
     }
 }
+
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        const now = new Date();
+        if (expectedEndTime) {
+            timerDuration = Math.round((expectedEndTime - now) / 1000);
+            updateDisplay(timerDuration, timerDisplay);
+        }
+    }
+});
 
 function resetTimer() {
     resetSound.play();
