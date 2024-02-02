@@ -10,10 +10,10 @@ const resetBtn = document.getElementById('reset-btn');
 const shortBreakBtn = document.getElementById('short-break-btn')
 const showTimeBtn = document.getElementById('show-time-btn')
 
-const resetSound = new Audio('../music/ding.mp3');
-const startSound = new Audio('../music/startding.mp3')
-const breakSound = new Audio ('../music/breakding.mp3')
-const finishSound = new Audio ('../music/finishline.mp3')
+const resetSound = new Audio('music/ding.mp3');
+const startSound = new Audio('music/startding.mp3')
+const breakSound = new Audio ('music/breakding.mp3')
+const finishSound = new Audio ('music/finishline.mp3')
 
 
 let timer = null;
