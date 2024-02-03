@@ -82,7 +82,7 @@ function resetTimer() {
     startTime = undefined; 
     isWorkSession = true;
     resetFlag = true;
-    timerDuration = 0.1 * 60; // Reset to 25 minutes
+    timerDuration = 25 * 60; // Reset to 25 minutes
     updateDisplay(timerDuration, timerDisplay);
     updateDisplay(totalSession, totalSessionDisplay);
     startPauseBtn.textContent = 'Start';
@@ -94,7 +94,7 @@ function shortBreakTimer() {
     timer = null;
     startTime = undefined; // Clear the startTime for new session
     isWorkSession = false;
-    timerDuration = 0.1 * 60; // Set for short break
+    timerDuration = 5 * 60; // Set for short break
     updateDisplay(timerDuration, timerDisplay);
     shortBreakBtn.textContent = 'Short Break';
 }
